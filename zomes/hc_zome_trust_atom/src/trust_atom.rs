@@ -142,7 +142,7 @@ fn normalize_value(value_str: Option<String>) -> ExternResult<Option<String>> {
 fn create_link_tag(link_direction: &LinkDirection, chunk_options: &[Option<String>]) -> LinkTag {
   let mut chunks: Vec<String> = vec![];
   if let Some(content) = chunk_options[0] {
-    if content.len() >= 900 {
+    if content.len() > 900 {
       let mut max_content = content.clone();
       max_content.truncate(900);
       max_content.push_str("…");
