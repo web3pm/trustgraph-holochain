@@ -145,7 +145,7 @@ fn create_link_tag(link_direction: &LinkDirection, chunk_options: &[Option<Strin
     if content.len() >= 900 {
       let mut max_content = content.clone();
       max_content.truncate(900);
-      max_content.push_str("...");
+      max_content.push_str("…");
       chunks.push(max_content);
     }
     else {chunks.push(content);}
