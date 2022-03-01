@@ -141,8 +141,17 @@ fn normalize_value(value_str: Option<String>) -> ExternResult<Option<String>> {
 
 fn create_link_tag(link_direction: &LinkDirection, chunk_options: &[Option<String>]) -> LinkTag {
   let mut chunks: Vec<String> = vec![];
+  if let Some(content) = chunk_options[0] {
+    if content.len() >= 900 {
+      let mut max_content = content.clone();
+      max_content.truncate(900);
+      max_content.push_str("...");
+      chunks.push(max_content);
+    }
+    else {chunks.push(content);}
+}
 
-  for i in 0..chunk_options.len() {
+  for i in 1..chunk_options.len() {
     if let Some(chunk) = chunk_options[i].clone() {
       chunks.push(chunk);
       if i < chunk_options.len() - 1 {
