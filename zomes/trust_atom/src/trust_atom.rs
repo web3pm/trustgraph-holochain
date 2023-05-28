@@ -180,6 +180,7 @@ pub fn query_mine(
   target: Option<AnyLinkableHash>,
   content_full: Option<String>,
   content_starts_with: Option<String>,
+  content_not_starts_with: Option<String>,
   value_starts_with: Option<String>,
 ) -> ExternResult<Vec<TrustAtom>> {
   let agent_address = AnyLinkableHash::from(agent_info()?.agent_initial_pubkey);
@@ -189,6 +190,7 @@ pub fn query_mine(
     target,
     content_full,
     content_starts_with,
+    content_not_starts_with,
     value_starts_with,
   )?;
 
@@ -204,6 +206,7 @@ pub fn query(
   target: Option<AnyLinkableHash>,
   content_full: Option<String>,
   content_starts_with: Option<String>,
+  content_not_starts_with: Option<String>,
   value_starts_with: Option<String>,
 ) -> ExternResult<Vec<TrustAtom>> {
   let (link_direction, link_base) = match (source, target) {
@@ -216,6 +219,31 @@ pub fn query(
       ))
     }
   };
+
+  // TODO - extract this block into a private function
+  // TOOD - tests
+  // TODO throw errors if other options are used
+  //   - content_full
+  //   - content_starts_with
+  //   - content_not_starts_with
+  //   - value_starts_with
+  if let Some(content_not_starts_with_string) = content_not_starts_with {
+    let links = get_links(link_base.clone(), LinkTypes::TrustAtom, None)?;
+    let trust_atoms = convert_links_to_trust_atoms(links, &link_direction, link_base)?;
+    let filtered_trust_atoms = trust_atoms
+      .into_iter()
+      .filter(|trust_atom| {
+        let content_option = trust_atom.content.clone();
+        if let Some(content) = content_option {
+          if content.starts_with(content_not_starts_with_string.as_str()) {
+            return false;
+          }
+        }
+        return true;
+      })
+      .collect();
+    return Ok(filtered_trust_atoms);
+  }
 
   let link_tag = match (content_full, content_starts_with, value_starts_with) {
     (Some(_content_full), Some(_content_starts_with), _) => {

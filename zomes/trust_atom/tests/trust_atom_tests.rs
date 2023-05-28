@@ -302,6 +302,7 @@ pub async fn test_delete_trust_atom() {
         target: Some(target.clone()),
         content_full: None,
         content_starts_with: None,
+        content_not_starts_with: None,
         value_starts_with: None,
       },
     )
@@ -320,6 +321,7 @@ pub async fn test_delete_trust_atom() {
         target: None,
         content_full: None,
         content_starts_with: None,
+        content_not_starts_with: None,
         value_starts_with: None,
       },
     )
@@ -352,6 +354,7 @@ pub async fn test_delete_trust_atom() {
         target: Some(target.clone()),
         content_full: None,
         content_starts_with: None,
+        content_not_starts_with: None,
         value_starts_with: None,
       },
     )
@@ -370,6 +373,7 @@ pub async fn test_delete_trust_atom() {
         target: None,
         content_full: None,
         content_starts_with: None,
+        content_not_starts_with: None,
         value_starts_with: None,
       },
     )
@@ -420,6 +424,7 @@ pub async fn test_query_mine() {
       trust_atom_types::QueryMineInput {
         target: None,
         content_starts_with: None,
+        content_not_starts_with: None,
         content_full: None,
         value_starts_with: None,
       },
@@ -486,6 +491,7 @@ pub async fn test_query_mine_with_content_starts_with() {
         target: None,
         content_full: None,
         content_starts_with: Some("sushi".into()),
+        content_not_starts_with: None,
         value_starts_with: None,
         // value_starts_with: Some("0.0".into()),
       },
@@ -549,6 +555,7 @@ pub async fn test_query_mine_with_content_full() {
         target: None,
         content_full: Some("sushi".into()),
         content_starts_with: None,
+        content_not_starts_with: None,
         value_starts_with: None,
         // value_starts_with: Some("0.0".into()),
       },
