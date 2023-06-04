@@ -220,13 +220,6 @@ pub fn query(
     }
   };
 
-  // TODO - extract this block into a private function
-  // TOOD - tests
-  // TODO throw errors if other options are used
-  //   - content_full
-  //   - content_starts_with
-  //   - content_not_starts_with
-  //   - value_starts_with
   if let Some(content_not_starts_with_string) = content_not_starts_with {
     let links = get_links(link_base.clone(), LinkTypes::TrustAtom, None)?;
     let trust_atoms = convert_links_to_trust_atoms(links, &link_direction, link_base)?;
@@ -244,6 +237,13 @@ pub fn query(
       .collect();
     return Ok(filtered_trust_atoms);
   }
+
+  // TOOD - tests
+  // TODO throw errors if other options are used
+  //   - content_full
+  //   - content_starts_with
+  //   - content_not_starts_with
+  //   - value_starts_with
 
   let link_tag = match (content_full, content_starts_with, value_starts_with) {
     (Some(_content_full), Some(_content_starts_with), _) => {
