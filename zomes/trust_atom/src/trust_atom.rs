@@ -237,7 +237,7 @@ pub fn query(
             return false;
           }
         }
-        return true;
+        true
       })
       .collect();
     return Ok(filtered_trust_atoms);
